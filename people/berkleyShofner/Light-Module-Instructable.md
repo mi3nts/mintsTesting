@@ -17,4 +17,6 @@
 2. Click on "+ New Project" and name the project (making sure to not use any spaces).
 3. Click on the board option and type in "nano". Select the board "Arduino Nano ATmega328 (New Bootloader)", keep the framework as "Arduino", and click Finish.
 4. There should now be a Project tab to the right of Atom with your one project folder in it.
-5. 
+5. To get to the c++ file, click on the "srs" folder under your project folder and click on "main.cpp".
+
+### **C. 
