@@ -1,4 +1,7 @@
-import board from adafruit_bme280
+import board 
+import adafruit_bme280
+from adafruit_bme280 import Adafruit_BME280_I2C
+
 i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
