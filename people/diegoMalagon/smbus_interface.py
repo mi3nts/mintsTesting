@@ -29,7 +29,7 @@ class SMBusSCD30:
             data.extend([msb, lsb, crc])
         self.bus.write_i2c_block_data(self.address, (command >> 8) & 0xFF, [command & 0xFF] + data)
 
-    def read_words(self, command, num_words=3, delay=0.005):
+    def read_words(self, command, num_words=3, delay=0.05):
         self.write_command(command)
         time.sleep(delay)
         read_len = num_words * 3
