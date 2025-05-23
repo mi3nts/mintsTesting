@@ -1,15 +1,15 @@
-import time
-import board
-import busio
-import adafruit_scd30
+# scd30_main.py
 
-i2c = busio.I2C(board.SCL, board.SDA, frequency=50000)
-scd = adafruit_scd30.SCD30(i2c)
+from scd30_smbus import SCD30
+import time
+
+sensor = SCD30(bus=5)
 
 while True:
-    if scd.data_available:
-        print("CO2:", scd.CO2, "PPM")
-        print("Temperature:", scd.temperature, "°C")
-        print("Humidity:", scd.relative_humidity, "%")
-        print("")
-    time.sleep(2)
+    if sensor.data_available:
+        co2, temp, rh = sensor.read_measurement()
+        print(f"CO2: {co2:.2f} ppm")
+        print(f"Temp: {temp:.2f} °C")
+        print(f"Humidity: {rh:.2f} %")
+        print()
+    time.sleep(0.5)
