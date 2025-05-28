@@ -1,39 +1,44 @@
-import smbus2
-import bme280
-from datetime import datetime, timezone
-
-port    = 5
-address = 0x77
-bus     = smbus2.SMBus(port)
-
-calibration_params = bme280.load_calibration_params(bus, address)
-
-data = bme280.sample(bus, address, calibration_params)
-
 """
 Basic print class for the BME280 sensor using the following driver library
 https://pypi.org/project/RPi.bme280/#files
 
 Allows the user to print temperature, pressure, or humidity readings
 """
+
+import smbus2
+import bme280
+from datetime import datetime, timezone
+
 class BME280:
-    def print(sensor=None):
-        if sensor==None:
-            print_all()
+    def __init__(self, port=5, address=0x77):
+        self.port = port
+        self.address = address
+        self.bus = smbus2.SMBus(self.port)
+        self.calibration_params = bme280.load_calibration_params(self.bus, self.address)
+        self.data = None
+
+    def sample(self):
+        self.data = bme280.sample(self.bus, self.address, self.calibration_params)
+
+    def print(self, sensor=None):
+        if self.data is None:
+            print("No data available. Run sample() first.")
+            return
+
+        if sensor is None:
+            self.print_all()
         elif sensor == "temperature":
-            print(data.temperature)
+            print("Temperature:", round(self.data.temperature, 2), "C")
         elif sensor == "pressure":
-            print(data.temperature)
+            print("Pressure:", round(self.data.pressure, 2), "hPa")
         elif sensor == "humidity":
-            print(data.temperature)
+            print("Humidity:", round(self.data.humidity, 2), "%")
         else:
-            return "Invalid data type! Please use BME280.print() for all or BME280.print('humidity'), etc"
+            print("Invalid data type! Use 'temperature', 'pressure', or 'humidity'.")
 
-    def print_all():
+    def print_all(self):
         currentTime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        print("Temperature:", data.temperature)
-        print("Pressure:", data.pressure)
-        print("Humidity:", data.humidity)
-
-    def sample():
-        data = bme280.sample(bus, address, calibration_params)
+        print(currentTime)
+        print("Temperature:", round(self.data.temperature, 2))
+        print("Pressure:", round(self.data.pressure, 2))
+        print("Humidity:", round(self.data.humidity, 2))
