@@ -7,7 +7,6 @@ Allows the user to print temperature, pressure, or humidity readings
 
 import smbus2
 import bme280
-from datetime import datetime, timezone
 
 class BME280:
     def __init__(self, port=5, address=0x77):
@@ -37,8 +36,6 @@ class BME280:
             print("Invalid data type! Use 'temperature', 'pressure', or 'humidity'.")
 
     def print_all(self):
-        currentTime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        print(currentTime)
         print("Temperature:", round(self.data.temperature, 2))
         print("Pressure:", round(self.data.pressure, 2))
         print("Humidity:", round(self.data.humidity, 2))
