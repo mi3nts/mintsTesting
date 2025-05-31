@@ -4,8 +4,13 @@ from smbus_interface import SMBusSCD30
 import struct
 
 CMD_START_CONTINUOUS_MEASUREMENT = 0x0010
+CMD_STOP_CONTINUOUS_MEASUREMENT = 0x0104
+CMD_SET_INTERVAL = 0x4600 #initial value is 2 seconds
 CMD_DATA_READY = 0x0202
 CMD_READ_MEASUREMENT = 0x0300
+CMD_TEMP_OFFSET = 0x5403 # argument needed
+CMD_ALT_COMP = 0x5102 # argument
+CMD_SET_FRC = 0x5204 #argument neeeded
 
 class SCD30:
     def __init__(self, bus=5):

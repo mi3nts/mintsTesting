@@ -7,7 +7,7 @@ class SMBusSCD30:
         self.address = address
 
     def _crc8(self, data):
-        crc = 0xFF  # Initialization value from datasheet
+        crc = 0xFF
         for byte in data:
             crc ^= byte
             for _ in range(8):
@@ -17,27 +17,47 @@ class SMBusSCD30:
                     crc = (crc << 1) & 0xFF
         return crc
 
-    def write_command(self, command, parameters=[]):
-        """
-        Write a command and optional list of 16-bit words to the sensor with CRC.
-        """
-        data = []
-        for word in parameters:
-            msb = (word >> 8) & 0xFF
-            lsb = word & 0xFF
-            crc = self._crc8([msb, lsb])
-            data.extend([msb, lsb, crc])
-        self.bus.write_i2c_block_data(self.address, (command >> 8) & 0xFF, [command & 0xFF] + data)
+    def write_command(self, command):
+        data = [command >> 8, command & 0xFF]
+        self.bus.write_i2c_block_data(self.address, 0, data)
 
-    def read_words(self, command, num_words=3, delay=0.05):
+    def write_command_with_argument(self, command, argument):
+        arg_msb = (argument >> 8) & 0xFF
+        arg_lsb = argument & 0xFF
+        crc = self._crc8([arg_msb, arg_lsb])
+        data = [
+            (command >> 8) & 0xFF,
+            command & 0xFF,
+            arg_msb,
+            arg_lsb,
+            crc
+        ]
+        self.bus.write_i2c_block_data(self.address, 0, data)
+
+    def read_register(self, command):
         self.write_command(command)
-        time.sleep(delay)
-        read_len = num_words * 3
-        raw = self.bus.read_i2c_block_data(self.address, 0, read_len)
-        words = []
-        for i in range(num_words):
-            msb, lsb, crc = raw[i*3:i*3+3]
-            if crc != self._crc8([msb, lsb]):
-                raise ValueError("CRC mismatch")
-            words.append((msb << 8) | lsb)
-        return words
+        time.sleep(0.005)
+        raw = self.bus.read_i2c_block_data(self.address, 0, 3)
+        msb, lsb, crc = raw
+        if self._crc8([msb, lsb]) != crc:
+            raise ValueError("CRC mismatch in register read")
+        return (msb << 8) | lsb
+
+    def read_measurement(self):
+        self.write_command(0x0300)
+        time.sleep(0.005)
+        raw = self.bus.read_i2c_block_data(self.address, 0, 18)
+
+        def word_to_float(start):
+            msb1, lsb1, crc1 = raw[start], raw[start+1], raw[start+2]
+            msb2, lsb2, crc2 = raw[start+3], raw[start+4], raw[start+5]
+            if self._crc8([msb1, lsb1]) != crc1 or self._crc8([msb2, lsb2]) != crc2:
+                raise ValueError("CRC mismatch in float read")
+            bytes_ = bytes([msb1, lsb1, msb2, lsb2])
+            import struct
+            return struct.unpack('>f', bytes_)[0]
+
+        co2 = word_to_float(0)
+        temp = word_to_float(6)
+        rh = word_to_float(12)
+        return co2, temp, rh
