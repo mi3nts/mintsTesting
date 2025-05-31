@@ -24,17 +24,17 @@ class SMBusSCD30:
         num_bytes = count * 3  # 2 bytes + 1 CRC per word
         raw = self.bus.read_i2c_block_data(self.address, 0, num_bytes)
 
-    words = []
-    for i in range(count):
-        msb = raw[i*3]
-        lsb = raw[i*3 + 1]
-        crc = raw[i*3 + 2]
-        if self._crc8([msb, lsb]) != crc:
-            raise ValueError("CRC mismatch in word read")
-        word = (msb << 8) | lsb
-        words.append(word)
+        words = []
+        for i in range(count):
+            msb = raw[i * 3]
+            lsb = raw[i * 3 + 1]
+            crc = raw[i * 3 + 2]
+            if self._crc8([msb, lsb]) != crc:
+                raise ValueError("CRC mismatch in word read")
+            word = (msb << 8) | lsb
+            words.append(word)
 
-    return words
+        return words 
 
 
     def write_command(self, command):
