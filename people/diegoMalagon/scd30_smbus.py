@@ -15,7 +15,7 @@ CMD_SET_FRC = 0x5204 #argument neeeded
 class SCD30:
     def __init__(self, bus=5):
         self.i2c = SMBusSCD30(bus)
-        self.i2c.write_command(CMD_START_CONTINUOUS_MEASUREMENT, [0])  # ambient pressure = 0
+        self.i2c.write_command_with_argument(CMD_START_CONTINUOUS_MEASUREMENT, [0])  # ambient pressure = 0
 
     @property
     def data_available(self):
@@ -31,4 +31,3 @@ class SCD30:
         temp = struct.unpack(">f", b[4:8])[0]
         rh = struct.unpack(">f", b[8:12])[0]
         return co2, temp, rh
-
