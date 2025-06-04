@@ -28,9 +28,9 @@ class SMBusSCD30:
         for i in range(count):
             msb = raw[i * 3]
             lsb = raw[i * 3 + 1]
-            crc = raw[i * 3 + 2]
-            if self._crc8([msb, lsb]) != crc:
-                raise ValueError("CRC mismatch in word read")
+           #crc = raw[i * 3 + 2]
+           #if self._crc8([msb, lsb]) != crc:
+                #raise ValueError("CRC mismatch in word read")
             word = (msb << 8) | lsb
             words.append(word)
 
