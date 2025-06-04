@@ -1,5 +1,6 @@
 from smbus2 import SMBus
 import time
+import struct
 
 class SMBusSCD30:
     def __init__(self, bus=5, address=0x61):
@@ -68,7 +69,3 @@ class SMBusSCD30:
         time.sleep(0.005)
         raw = self.bus.read_i2c_block_data(self.address, 0, 18)
         
-    def word_to_float(msb_word,lsb_word):
-        # combine two 16 bit words into a 4 -byte big endian
-        raw_bytes = struct.pack('>HH', msb_word, lsb_word)
-        return struct.unpack('>f', raw_bytes)[0]

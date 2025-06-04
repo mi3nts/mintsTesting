@@ -17,6 +17,10 @@ class SCD30:
         self.i2c = SMBusSCD30(bus)
         self.i2c.write_command_with_argument(CMD_START_CONTINUOUS_MEASUREMENT, 0)  # ambient pressure = 0
 
+    def word_to_float(msb_word, lsb_word):
+        raw_bytes = struct.pack('>HH', msb_word, lsb_word)
+        return struct.unpack('>f', raw_bytes)[0]
+      
     @property
     def data_available(self):
         result = self.i2c.read_words(CMD_DATA_READY, 1)
@@ -30,3 +34,6 @@ class SCD30:
         humid  = word_to_float(raw_words[4], raw_words[5])
 
         return co2, temp, humid
+      
+    def stop_measurement(self):
+        self.i2c.write_command(CMD_STOP_CONTINUOUS_MEASUREMENT)
