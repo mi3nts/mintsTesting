@@ -25,8 +25,8 @@ class SCD30:
     def read_measurement(self):
         raw_words = self.i2c.read_words(CMD_READ_MEASUREMENT, 6)  # 6 words = 3 floats
 
-        co2  = words_to_float(raw_words[0], raw_words[1])
-        temp = words_to_float(raw_words[2], raw_words[3])
-        humid  = words_to_float(raw_words[4], raw_words[5])
+        co2  = word_to_float(raw_words[0], raw_words[1])
+        temp = word_to_float(raw_words[2], raw_words[3])
+        humid  = word_to_float(raw_words[4], raw_words[5])
 
         return co2, temp, humid
