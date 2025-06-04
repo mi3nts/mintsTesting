@@ -23,11 +23,10 @@ class SCD30:
         return result[0] == 1
 
     def read_measurement(self):
-        words = self.i2c.read_words(CMD_READ_MEASUREMENT, 6)  # 6 words = 3 floats
-        b = bytearray()
-        for word in words:
-            b.extend(word.to_bytes(2, 'big'))
-        co2 = struct.unpack(">f", b[0:4])[0]
-        temp = struct.unpack(">f", b[4:8])[0]
-        rh = struct.unpack(">f", b[8:12])[0]
-        return co2, temp, rh
+        raw_words = self.i2c.read_words(CMD_READ_MEASUREMENT, 6)  # 6 words = 3 floats
+
+        co2  = words_to_float(raw_words[0], raw_words[1])
+        temp = words_to_float(raw_words[2], raw_words[3])
+        humid  = words_to_float(raw_words[4], raw_words[5])
+
+        return co2, temp, humid

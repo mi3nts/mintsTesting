@@ -67,17 +67,8 @@ class SMBusSCD30:
         self.write_command(0x0300)
         time.sleep(0.005)
         raw = self.bus.read_i2c_block_data(self.address, 0, 18)
-
-        def word_to_float(start):
-            msb1, lsb1, crc1 = raw[start], raw[start+1], raw[start+2]
-            msb2, lsb2, crc2 = raw[start+3], raw[start+4], raw[start+5]
-            if self._crc8([msb1, lsb1]) != crc1 or self._crc8([msb2, lsb2]) != crc2:
-                raise ValueError("CRC mismatch in float read")
-            bytes_ = bytes([msb1, lsb1, msb2, lsb2])
-            import struct
-            return struct.unpack('>f', bytes_)[0]
-
-        co2 = word_to_float(0)
-        temp = word_to_float(6)
-        rh = word_to_float(12)
-        return co2, temp, rh
+        
+    def word_to_float(msb_word,lsb_word):
+        # combine two 16 bit words into a 4 -byte big endian
+        raw_bytes = struct.pack('>HH', msb_word, lsb_word)
+        return struct.unpack('>f', raw_bytes)[0]
