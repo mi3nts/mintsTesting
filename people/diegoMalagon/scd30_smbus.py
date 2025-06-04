@@ -12,14 +12,14 @@ CMD_TEMP_OFFSET = 0x5403 # argument needed
 CMD_ALT_COMP = 0x5102 # argument
 CMD_SET_FRC = 0x5204 #argument neeeded
 
+	def word_to_float(msb_word, lsb_word):
+        raw_bytes = struct.pack('>HH', msb_word, lsb_word)
+        return struct.unpack('>f', raw_bytes)[0]
+
 class SCD30:
     def __init__(self, bus=5):
         self.i2c = SMBusSCD30(bus)
         self.i2c.write_command_with_argument(CMD_START_CONTINUOUS_MEASUREMENT, 0)  # ambient pressure = 0
-
-    def word_to_float(msb_word, lsb_word):
-        raw_bytes = struct.pack('>HH', msb_word, lsb_word)
-        return struct.unpack('>f', raw_bytes)[0]
       
     @property
     def data_available(self):
