@@ -64,8 +64,4 @@ class SMBusSCD30:
             raise ValueError("CRC mismatch in register read")
         return (msb << 8) | lsb
 
-    def read_measurement(self):
-        self.write_command(0x0300)
-        time.sleep(0.005)
-        raw = self.bus.read_i2c_block_data(self.address, 0, 18)
         
