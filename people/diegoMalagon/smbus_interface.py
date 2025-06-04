@@ -20,7 +20,7 @@ class SMBusSCD30:
       
     def read_words(self, command, count):
         self.write_command(command)
-        time.sleep(0.005)
+        time.sleep(0.02)
 
         num_bytes = count * 3  # 2 bytes + 1 CRC per word
         raw = self.bus.read_i2c_block_data(self.address, 0, num_bytes)
@@ -57,7 +57,7 @@ class SMBusSCD30:
 
     def read_register(self, command):
         self.write_command(command)
-        time.sleep(0.005)
+        time.sleep(0.02)
         raw = self.bus.read_i2c_block_data(self.address, 0, 3)
         msb, lsb, crc = raw
         if self._crc8([msb, lsb]) != crc:
