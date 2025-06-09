@@ -1,0 +1,56 @@
+timestamp: '2025-06-09T04:51:54.948681'
+
+---
+GPRMC_validity: A
+GPRMC_datetime: 09/06/25 04:51:57:.0:0
+GPRMC_coordinates: 32B049.02'N, 96B036.16'W
+GPRMC_speed in knots: 0.029 knots
+GPRMC_true course: ''
+GPRMC_magnetic variation: 'B0 '
+GPVTG_true track: B0 T
+GPVTG_magnetic track: B0 M
+GPVTG_speed in knots: 0.029 knots
+GPVTG_speed in km/h: 0.054 km/h
+GPGGA_time (UTC): 04:51:57:.0:0
+GPGGA_coordinates: 32B049.02'N, 96B036.16'W
+GPGGA_fix quality: '2'
+GPGGA_satellites used: '10'
+GPGGA_HDOP: '0.93'
+GPGGA_altitude: 157.4 M
+GPGGA_geoidal separation: -25.3 M
+GPGLL_time_UTC: 04:51:56:.0:0
+GPGLL_latitude: 32B049.02'N
+GPGLL_longitude: 96B036.16'W
+GPGLL_status: Valid
+timestamp: '2025-06-09T04:51:57.027190'
+
+---
+timestamp: '2025-06-09T04:51:59.958621'
+
+---
+GPRMC_validity: A
+GPRMC_datetime: 09/06/25 04:52:02:.0:0
+GPRMC_coordinates: 32B049.02'N, 96B036.16'W
+GPRMC_speed in knots: 0.065 knots
+GPRMC_true course: ''
+GPRMC_magnetic variation: 'B0 '
+GPVTG_true track: B0 T
+GPVTG_magnetic track: B0 M
+GPVTG_speed in knots: 0.065 knots
+GPVTG_speed in km/h: 0.121 km/h
+GPGGA_time (UTC): 04:52:02:.0:0
+GPGGA_coordinates: 32B049.02'N, 96B036.16'W
+GPGGA_fix quality: '2'
+GPGGA_satellites used: '10'
+GPGGA_HDOP: '0.93'
+GPGGA_altitude: 157.7 M
+GPGGA_geoidal separation: -25.3 M
+GPGSA_mode: Automatic
+GPGSA_fix type: 3D Fix
+GPGSA_satellites used: 03, 04, 09, 46, 27, 28, 16, 48, 26, 31
+GPGSA_PDOP: '1.64'
+GPGSA_HDOP: '0.93'
+GPGSA_VDOP: '1.36'
+timestamp: '2025-06-09T04:52:02.027849'
+
+---
