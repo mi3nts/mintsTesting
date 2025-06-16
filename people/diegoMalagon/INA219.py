@@ -3,9 +3,9 @@ from smbus2 import SMBus
 import time
 
 class FirstINA219:
-    def __init__(self, address=0x40, bus_num=1):
-        self.ina = INA219(0.1, 0.2, address)
-        self.ina.configure(self.ina.RANGE_16V)
+    def __init__(self, address=0x40, bus_num=5):
+        self.ina = INA219(0.1, address=address, busnum=bus_num)
+        self.ina.configure(self.ina.RANGE_5V)
         self.address = address
         self.bus = SMBus(bus_num)
 
@@ -30,9 +30,9 @@ class FirstINA219:
             print(f"    Reg 0x{reg:02X}: 0x{swapped:04X}")
 
 class SecondINA219:
-    def __init__(self, address=0x41, bus_num=1):
-        self.ina = INA219(0.1, 0.2, address)
-        self.ina.configure(self.ina.RANGE_16V)
+    def __init__(self, address=0x41, bus_num=5):
+        self.ina = INA219(0.1, address=address, busnum=bus_num)
+        self.ina.configure(self.ina.RANGE_5V)
         self.address = address
         self.bus = SMBus(bus_num)
 
