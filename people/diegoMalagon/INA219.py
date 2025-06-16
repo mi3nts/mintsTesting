@@ -5,7 +5,7 @@ import time
 class FirstINA219:
     def __init__(self, address=0x40, bus_num=5):
         self.ina = INA219(0.1, address=address, busnum=bus_num)
-        self.ina.configure(self.ina.RANGE_5V)
+        self.ina.configure(self.ina.RANGE_16V)
         self.address = address
         self.bus = SMBus(bus_num)
 
@@ -32,7 +32,7 @@ class FirstINA219:
 class SecondINA219:
     def __init__(self, address=0x41, bus_num=5):
         self.ina = INA219(0.1, address=address, busnum=bus_num)
-        self.ina.configure(self.ina.RANGE_5V)
+        self.ina.configure(self.ina.RANGE_16V)
         self.address = address
         self.bus = SMBus(bus_num)
 
