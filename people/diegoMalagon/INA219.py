@@ -1,47 +1,47 @@
-from smbus2 import SMBus
+from ina219 import INA219, DeviceRangeError
 import time
-import struct
-from ina219 import INA219
-from ina219 import DeviceRangeError
 
+class FirstINA219:
+    def __init__(self, address=0x40):
+        self.ina = INA219(0.1, address)
+        self.ina.configure()
 
-class firstINA219:
-
-    def __init__(self, bus=5, address=0x40):
-        self.bus = SMBus(bus)
-        self.address = address
-
-
-    def read():
-        ina = INA219(0.1,0x40)
-        ina.configure()
-
-        print("Bus Voltage: %.3f V" % ina.voltage())
+    def read(self):
+        print("Sensor 1:")
+        print("  Bus Voltage: %.3f V" % self.ina.voltage())
         try:
-            print("Power: %.3f mA" % ina.power())
-            print("Shunt Voltage: %.3f mV" % ina.shunt_voltage())
-            print('Bus Current: %.3f' % ina.current())
-
-
+            print("  Power: %.3f mW" % self.ina.power())
+            print("  Shunt Voltage: %.3f mV" % self.ina.shunt_voltage())
+            print("  Bus Current: %.3f mA" % self.ina.current())
         except DeviceRangeError as e:
-            print (e)
+            print("  Error:", e)
 
-class secondINA219:
-    def __init__(self, bus=5, address=0x41):
-        self.bus = SMBus(bus)
-        self.address = address
+class SecondINA219:
+    def __init__(self, address=0x41):
+        self.ina = INA219(0.1, address)
+        self.ina.configure()
 
-    def read():
-        inaTwo = INA219(0.1,0x41)
-        inaTwo.configure()
-
-        print("Bus Voltage: %.3f V" % inaTwo.voltage())
+    def read(self):
+        print("Sensor 2:")
+        print("  Bus Voltage: %.3f V" % self.ina.voltage())
         try:
-            print("Power: %.3f mA" % inaTwo.power())
-            print("Shunt Voltage: %.3f mV" % inaTwo.shunt_voltage())
-            print('Bus Current: %.3f' % inaTwo.current())
-            print('Just Voltage: %.3f' & inaTwo.voltage())
-
+            print("  Power: %.3f mW" % self.ina.power())
+            print("  Shunt Voltage: %.3f mV" % self.ina.shunt_voltage())
+            print("  Bus Current: %.3f mA" % self.ina.current())
         except DeviceRangeError as e:
-            print (e)
+            print("  Error:", e)
 
+
+# Continuous loop
+if __name__ == "__main__":
+    sensor1 = FirstINA219()
+    sensor2 = SecondINA219()
+
+    try:
+        while True:
+            print("\n--- Reading Sensors ---")
+            sensor1.read()
+            sensor2.read()
+            time.sleep(1)  # wait 1 second
+    except KeyboardInterrupt:
+        print("\nExiting loop.")
