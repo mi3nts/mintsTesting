@@ -19,15 +19,6 @@ class FirstINA219:
         except DeviceRangeError as e:
             print("  Error:", e)
 
-        # Optional: print raw register data
-        self.read_raw_registers()
-
-    def read_raw_registers(self):
-        print("  Raw I2C Register Data:")
-        for reg in range(0x00, 0x06):  # 0x00 to 0x05 are the main INA219 registers
-            value = self.bus.read_word_data(self.address, reg)
-            swapped = ((value << 8) & 0xFF00) | (value >> 8)  # convert from little-endian
-            print(f"    Reg 0x{reg:02X}: 0x{swapped:04X}")
 
 class SecondINA219:
     def __init__(self, address=0x41, bus_num=5):
@@ -46,14 +37,8 @@ class SecondINA219:
         except DeviceRangeError as e:
             print("  Error:", e)
 
-        self.read_raw_registers()
 
-    def read_raw_registers(self):
-        print("  Raw I2C Register Data:")
-        for reg in range(0x00, 0x06):
-            value = self.bus.read_word_data(self.address, reg)
-            swapped = ((value << 8) & 0xFF00) | (value >> 8)
-            print(f"    Reg 0x{reg:02X}: 0x{swapped:04X}")
+
 
 
 # Continuous loop
