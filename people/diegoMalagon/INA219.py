@@ -2,9 +2,9 @@ from ina219 import INA219, DeviceRangeError
 import time
 
 class FirstINA219:
-    def __init__(self, address=0x40):
+    def __init__(self,0.2, address=0x40):
         self.ina = INA219(0.1, address)
-        self.ina.configure()
+        self.ina.configure(ina.RANGE_16V)
 
     def read(self):
         print("Sensor 1:")
@@ -17,9 +17,9 @@ class FirstINA219:
             print("  Error:", e)
 
 class SecondINA219:
-    def __init__(self, address=0x41):
+    def __init__(self,0.2, address=0x41):
         self.ina = INA219(0.1, address)
-        self.ina.configure()
+        self.ina.configure(ina.RANGE_16V)
 
     def read(self):
         print("Sensor 2:")
