@@ -23,7 +23,7 @@ def main():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        print("stopping...")
+        print(" stopping...")
     finally:
         ips.close()
 
