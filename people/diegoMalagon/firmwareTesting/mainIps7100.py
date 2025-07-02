@@ -2,7 +2,7 @@ from ips7100 import IpsSensor
 import time
 
 def main():
-    ips = IpsSensor(bus_number=3)
+    ips = IpsSensor(bus_number=4)
     ips.set_debug(True)
     ips.begin()
 
