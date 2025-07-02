@@ -11,7 +11,7 @@ class IpsSensor:
         self.pc_values = [0]*7
         self.pm_values = [0.0]*7
         self.event_status = 0
-        self.debug = False
+        self.debug = True
 
     def begin(self):
         """
