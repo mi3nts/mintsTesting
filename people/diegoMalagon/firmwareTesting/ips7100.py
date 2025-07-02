@@ -6,7 +6,7 @@ class IpsSensor:
     POLY = 0x8408
     I2C_ADDRESS = 0x4B
 
-    def __init__(self, bus_number=5):
+    def __init__(self, bus_number=4):
         self.bus = SMBus(bus_number)
         self.pc_values = [0]*7
         self.pm_values = [0.0]*7
