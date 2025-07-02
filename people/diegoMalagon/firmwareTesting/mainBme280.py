@@ -1,5 +1,5 @@
 from time import sleep
-from bme280 import BME280  
+from bme280Driver import BME280  
 
 def main():
     sensor = BME280()
