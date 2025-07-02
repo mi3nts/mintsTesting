@@ -13,7 +13,6 @@ class BME280:
         self.port = port
         self.address = address
         self.bus = smbus2.SMBus(self.port)
-        self.calibration_params = bme280.load_calibration_params(self.bus, self.address)
         self.data = None
 
     def sample(self):
