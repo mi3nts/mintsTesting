@@ -17,8 +17,7 @@ class IpsSensor:
         """
         Initialize sensor and start measurements with 200ms sampling
         """
-        if self.debug:
-            print(f"IpsSensor begin on bus {self.bus.fd}")
+
         # send start measurement command
         self.bus.write_i2c_block_data(self.I2C_ADDRESS, 0x10, [0x01])
         time.sleep(5)  # warm-up
